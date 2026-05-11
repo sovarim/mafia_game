@@ -1,0 +1,138 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Base ─── */
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Perspective for card flip ─── */
+.perspective { perspective: 1000px; }
+.preserve-3d { transform-style: preserve-3d; }
+.backface-hidden { backface-visibility: hidden; }
+.rotate-y-180 { transform: rotateY(180deg); }
+
+/* ─── Card flip animation ─── */
+.card-flip {
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.card-flip.flipped {
+  transform: rotateY(180deg);
+}
+
+/* ─── Screen transitions ─── */
+.screen-enter {
+  animation: screenIn 0.4s ease-out forwards;
+}
+.screen-exit {
+  animation: screenOut 0.3s ease-in forwards;
+}
+@keyframes screenIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes screenOut {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(-16px); }
+}
+
+/* ─── Night/Day background transitions ─── */
+.bg-transition {
+  transition: background 0.8s ease-in-out;
+}
+
+/* ─── Timer pulse (last 5 seconds) ─── */
+.timer-urgent {
+  animation: timerPulse 0.5s ease-in-out infinite alternate;
+}
+@keyframes timerPulse {
+  from { opacity: 1; transform: scale(1); }
+  to   { opacity: 0.7; transform: scale(1.05); }
+}
+
+/* ─── Floating dots (night wait) ─── */
+.dot-float {
+  animation: dotFloat 2s ease-in-out infinite;
+}
+.dot-float:nth-child(2) { animation-delay: 0.3s; }
+.dot-float:nth-child(3) { animation-delay: 0.6s; }
+@keyframes dotFloat {
+  0%, 100% { opacity: 0.3; transform: translateY(0); }
+  50%      { opacity: 1;   transform: translateY(-6px); }
+}
+
+/* ─── Player appear ─── */
+.player-enter {
+  animation: playerIn 0.35s ease-out forwards;
+}
+@keyframes playerIn {
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ─── Death fade ─── */
+.death-fade {
+  animation: deathFade 0.8s ease-out forwards;
+}
+@keyframes deathFade {
+  0%   { opacity: 1; filter: brightness(1); }
+  100% { opacity: 0.5; filter: brightness(0.5) grayscale(0.5); }
+}
+
+/* ─── Vote fly animation ─── */
+.vote-fly {
+  animation: voteFly 0.4s ease-out forwards;
+}
+@keyframes voteFly {
+  from { opacity: 0; transform: translateY(20px) scale(0.5); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ─── Confetti ─── */
+.confetti-piece {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  top: -10px;
+  animation: confettiFall var(--fall-duration, 2s) var(--fall-delay, 0s) ease-in forwards;
+}
+@keyframes confettiFall {
+  0%   { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(var(--spin, 720deg)); opacity: 0; }
+}
+
+/* ─── Winner glow ─── */
+.winner-glow {
+  animation: winnerGlow 2s ease-in-out infinite alternate;
+}
+@keyframes winnerGlow {
+  from { text-shadow: 0 0 10px var(--glow-color); }
+  to   { text-shadow: 0 0 30px var(--glow-color), 0 0 60px var(--glow-color); }
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+
+/* ─── Safe area padding ─── */
+.safe-top { padding-top: env(safe-area-inset-top, 16px); }
+.safe-bottom { padding-bottom: env(safe-area-inset-bottom, 16px); }
+
+/* ─── Stars background ─── */
+.stars-bg {
+  background-image:
+    radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.15) 50%, transparent 50%),
+    radial-gradient(1px 1px at 30% 60%, rgba(255,255,255,0.1) 50%, transparent 50%),
+    radial-gradient(1.5px 1.5px at 50% 10%, rgba(255,255,255,0.12) 50%, transparent 50%),
+    radial-gradient(1px 1px at 70% 40%, rgba(255,255,255,0.08) 50%, transparent 50%),
+    radial-gradient(1px 1px at 85% 75%, rgba(255,255,255,0.1) 50%, transparent 50%),
+    radial-gradient(1.5px 1.5px at 20% 80%, rgba(255,255,255,0.14) 50%, transparent 50%),
+    radial-gradient(1px 1px at 60% 90%, rgba(255,255,255,0.08) 50%, transparent 50%),
+    radial-gradient(1px 1px at 90% 15%, rgba(255,255,255,0.1) 50%, transparent 50%);
+}
